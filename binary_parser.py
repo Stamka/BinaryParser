@@ -46,7 +46,7 @@ def parse_command(segment):
     print("size of section structure ", int(read4hex(segment[8:16]), 16))
     name = read4str(segment[16:48])
     try:
-        print("size of section structure ", bytes.fromhex(name).decode("utf-8"))
+        print("Name of Segment structure ", bytes.fromhex(name).decode("utf-8"))
     except:
         pass
     print("vmaddr", int(read4hex(segment[48:64]), 16))
@@ -321,10 +321,12 @@ elif "feedfacf" in read4hex(ba[0:8]):
     print("cpu_type = ", read4hex(ba[8:16]))
     print("cpu_subtype = ", read4hex(ba[16:24]))
     print("file_type = ", read4hex(ba[24:32]))
+    if (int(read4hex(ba[24:32]),16) == 2):
+        print("demand paged executable file")
     print("number of commands = ", int(read4hex(ba[32:40]), 16))
     ncmnds = int(read4hex(ba[32:40]), 16)
     print("sizeof commands = ", int(read4hex(ba[40:48]), 16))
-    print("flags = ", int(read4hex(ba[48:56]), 16))
+    print("flags = ", read4hex(ba[48:56]))
 
     # with MachO(file) as m:
     #    for sect in m.get_load_commands():
